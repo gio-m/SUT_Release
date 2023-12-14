@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<h3></h3>
+
+<br>
+
+<form id="register-form" action="" method="post">
+    {% csrf_token %}
+
+    <div class="card mx-auto" style="width: 30rem;">
+        <div class="card-body">
+            <h5 class="card-title">Complete todos los campos</h5>
+            {{ form | crispy }}
+
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    // Guarda las opciones de comuna para cada región
+                    var comunasPorRegion = {
+                        {% for region, comunas in comunas_por_region.items %}
+                            '{{ region }}': {{ comunas|safe }},
+                        {% endfor %}
+                    };
+
+                    // Función para actualizar las opciones de comuna al seleccionar una región
+                    $('#id_region').change(function () {
+                        var regionSeleccionada = $(this).val();
+                        var comunas = comunasPorRegion[regionSeleccionada] || [];
+                        var opcionesComuna = '';
+
+                        for (var i = 0; i < comunas.length; i++) {
+                            opcionesComuna += '<option value="' + comunas[i] + '">' + comunas[i] + '</option>';
+                        }
+
+                        $('#id_comuna').html(opcionesComuna);
+                    });
+
+                    var rutInput = $('#id_rut');
+
+                    function formatRut() {
+                        var rut = rutInput.val().replace(/[^\dKk]/g, '');
+                        var formattedRut = '';
+
+                        if (rut.length > 1) {
+                            var dv = rut.slice(-1).toUpperCase();
+                            rut = rut.slice(0, -1);
+
+                            while (rut.length > 3) {
+                                formattedRut = '.' + rut.slice(-3) + formattedRut;
+                                rut = rut.slice(0, -3);
+                            }
+
+                            formattedRut = rut + formattedRut;
+                            rutInput.val(formattedRut + '-' + dv);
+                        }
+                    }
+
+                    rutInput.on('input', formatRut);
+
+                    formatRut();
+                });
+            </script>
+
+            <a href="{% url 'inicio' %}" class="card-link">Inicio</a>
+            <a href="{% url 'login' %}" class="card-link">Iniciar sesión</a>
+            <button class="btn btn-sm btn-primary float-end" type="submit">Registrarse</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

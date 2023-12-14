@@ -1,0 +1,114 @@
+{% extends "base.html" %} 
+
+{% block titulo %}  {% endblock %}
+
+{% block contenido %}
+
+
+
+<div class="container my-5">
+    {% if request.user.is_authenticated %}
+        <h3>Bienvenido {{ user.username | upper }}</h3>
+        {% else %}
+        <h5>Bienvenido</h5>
+        {% endif %}
+        <h4>Aquí conocerás las noticias, actividades y proyectos que tiene la junta de vecinos </h4>
+
+        
+</div>
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://picsum.photos/1920/500" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://picsum.photos/1920/500" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="https://picsum.photos/1920/500    " class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+<div class="container my-5">
+    <h2>Noticias de la junta de vecinos</h2>
+
+    <div class="row">
+        {% for noticia in noticias|slice:":2" %}
+        <!-- El filtro slice:":3" limita las noticias a solo las tres primeras -->
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <img src="{{ noticia.Imagen.url }}" class="card-img img-fluid"  alt="Imagen de la noticia">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h5 class="card-title">Tipo de Noticia: {{ noticia.Titulo }}</h5>
+                            <p class="card-text">Descripción: {{ noticia.Descripcion }}</p>
+                            <p class="card-text"><strong>Redactor: </strong>{{ noticia.redactor.first_name }} {{ noticia.redactor.last_name }}</p>
+                            <p class="card-text"><strong>Fecha de publicación: </strong>{{ noticia.Fecha }}</p>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="container bg-light my-5" >
+        <div class="row">
+            <div class="col-6">
+                <h4>Informacion de contacto</h4>
+                <br>
+                <h6>Nombre Presidente: Presidente de la Junta</h6>
+                <br>
+                <h6>Telefóno: +569 12345678</h6>
+                <br>
+                <h6>Correo Presidente: presidente@presidente.com</h6>
+                <br>
+                <a class="text-black" href="{% url 'noticias' %}">Noticias</a>
+                <a class="text-black" href="{% url 'actividades' %}">Actividades</a>
+                <a class="text-black" href="{% url 'proyectos' %}">Proyectos</a>
+            </div>
+            <div class="col-6">
+                <h5>Ubicación de la junta de vecinos</h5>
+                <div id="map"></div></div>
+            </div>
+        </div>
+        
+    
+<script>
+  function iniciarMap(){
+    var coord = {lat:-33.0408553 ,lng: -71.3653334};
+    var map = new google.maps.Map(document.getElementById('map'),{
+      zoom: 14,
+      center: coord
+    });
+    var marker = new google.maps.Marker({
+      position: coord,
+      map: map
+    });
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLXUamL-Kb1eTWjYia-IdrVCQnV3o7H8w&callback=iniciarMap"></script>
+<style>#map {
+  height: 300px;
+  width: 100%;
+  margin: 5%;
+}</style>
+</div>
+
+
+{% endblock %}

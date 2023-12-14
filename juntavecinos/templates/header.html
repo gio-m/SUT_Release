@@ -1,0 +1,87 @@
+{% if user.is_authenticated %}
+    {% if group_name == 'usuario' %}
+        <header class="p-3 text-bg-dark bg-primary">
+            <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+                
+    {% elif group_name == 'administrativo' %}
+        <header class="p-3 text-bg-dark bg-danger">
+            <nav class="navbar navbar-expand-lg navbar-light bg-danger">
+    {% elif group_name == 'directiva' %}
+        <header class="p-3 text-bg-dark bg-secondary">
+            <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    {% elif group_name == 'presidente' %}
+        <header class="p-3 text-bg-dark bg-success">
+            <nav class="navbar navbar-expand-lg navbar-light bg-success">
+    {% endif %}
+{% else %}
+<header class="p-3 text-bg-dark bg-primary">    
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+{% endif %}
+      <a class="navbar-brand text-white" href="{% url 'inicio' %}">Junta de Vecinos</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link text-white" href="{% url 'inicio' %}">Inicio</a>
+          </li>
+          {% if group_name == 'directiva' or group_name == 'presidente'%}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'crear_noticia' %} ">Crear noticia</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link text-white " href="{% url 'noticias' %}">Noticias</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'actividades' %}">Actividades</a>
+          </li>
+          {% if group_name == 'directiva' or group_name == 'presidente'%}
+          <li class="nav-item">
+            <a class="nav-link text-white " href="{% url 'crear_actividades' %}">Crear actividades</a>
+          </li>
+          {% endif %}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'proyectos' %}">Proyectos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white " href="{% url 'preguntas_frecuentes' %}">Preguntas Frecuentes</a>
+          </li>
+          {% if group_name == 'presidente' or group_name == 'directiva' %}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'crear_proyecto' %}">Crear proyectos</a>
+          </li>
+          {% endif %}
+          {% if group_name == 'presidente' or group_name == 'usuario' %}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'solicitud_documentos' %}">Solicitar documentos</a>
+          </li>
+          {% endif %}
+          {% if group_name == 'presidente' or group_name == 'administrativo' %}
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'documentos' %}">Revisar solicitudes</a>
+          </li>
+          {% endif %}
+         
+
+      </div>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav ml-auto"> 
+        {% if request.user.is_authenticated %}
+        <li class="nav-item"><a href="{% url 'editar_usuario' %}" class="nav-link link-dark px-2 text-white">@{{ user.username | upper }}</a></li>
+        <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link link-dark px-2 text-white">Salir</a></li>
+        {% else %}
+        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link link-dark px-2 text-white">Iniciar sesión</a></li>
+        <li class="nav-item"><a href="{% url 'register' %}" class="nav-link link-dark px-2 text-white">Registrarse</a></li>
+        {% endif %}
+      </ul>
+  </div>
+    </nav>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  </header>

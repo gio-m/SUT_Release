@@ -1,0 +1,47 @@
+{% extends "base.html" %} 
+
+{% block titulo %} Agregar nueva actividad {% endblock %}
+
+{% block contenido %}
+<div class="container my-4">
+    <h2>Noticias de la junta de vecinos</h2>
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+    <div class="row">
+        {% for noticia in noticias %}
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <img src="{{ noticia.Imagen.url }}" class="card-img img-fluid"  alt="Imagen de la noticia">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <h5 class="card-title">Tipo de Noticia: {{ noticia.Titulo }}</h5>
+                            <p class="card-text">Descripción: {{ noticia.Descripcion }}</p>
+                            <p class="card-text"><strong>Redactor: </strong>{{ noticia.redactor.first_name }} {{ noticia.redactor.last_name }}</p>
+                            <p class="card-text"><strong>Fecha de publicación: </strong>{{ noticia.Fecha }}</p>
+
+                            {% if group_name == 'directiva' or group_name == 'presidente' %}
+                            <a class="btn btn-sm btn-warning" href="{% url 'editar_noticia' noticia.id %}">Editar</a>
+                            <a class="btn btn-sm btn-danger" href="{% url 'eliminar_noticia' noticia.id %}">Eliminar</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+

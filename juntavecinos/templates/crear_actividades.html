@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="post">
+    {% load crispy_forms_tags %}
+    <div class="container my-4">
+        <h2>Agregar Nueva Actividad</h2>
+
+        <!-- sección de mensajes -->
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="card mx-auto my-5" >
+                <div class="card-body">
+                    <h5 class="card-title">Complete todos los campos</h5>
+                    {{ form | crispy }}
+                    <a class="card-link" href="{% url 'inicio' %}">Inicio</a>
+                    <a class="card-link" href="{% url 'actividades' %}">Actividades</a>
+                    <button class="btn btn-primary float-end" type="submit">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+        <!-- sección de mensajes -->
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Documentos Solicitados</h2>
+            <ul class="document-list">
+                {% for documento in documentos %}
+                <li class="document">
+                    <a href="javascript:void(0);" class="mostrar-detalle" style="text-decoration: none;">
+                        <h5 class="documento-title">{{ documento.nombre_documento|title }}</h5>
+                    </a>
+                    <div class="detalles" style="display: none;">
+                        <div class="detalle-item">
+                            <strong>Nombre del Documento:</strong> {{ documento.nombre_documento }}
+                        </div>
+                        <div class="detalle-item">
+                            <strong>Tipo de Documento:</strong> {{ documento.get_tipo_documento_display }}
+                        </div>
+                        <div class="detalle-item">
+                            </strong> {{ documento.fecha_publicacion|date:"d/m/Y H:i" }}
+                        </div>
+                        <div class="detalle-item">
+                            <strong>Nombre del Usuario:</strong> {{ documento.usuario.username}}
+                        </div>
+                        <div class="detalle-item">
+                            <strong>Correo Electrónico:</strong> {{ documento.usuario.email }}
+                        </div>
+                        <div class="detalle-item">
+                            <strong>Descripción:</strong> {{ documento.descripcion_documento }}
+                        </div>
+                        {% if documento.estado == 'R' %}
+                                <h5><span class="badge bg-danger w-100">{{ documento.get_estado_display|upper }}</span>
+                                </h5>
+                            {% elif documento.estado == 'P' %}
+                                <h5><span
+                                    class="badge bg-warning text-dark w-100">{{ documento.get_estado_display|upper }}</span>
+                                </h5>
+                            {% elif documento.estado == 'A' %}
+                                <h5><span class="badge bg-success w-100">{{ documento.get_estado_display|upper }}</span>
+                                </h5>
+                        {% endif %}
+                        <div class="detalle-item">
+                            <strong>Archivo Adjunto:</strong>
+                            <a href="{{ documento.archivo.url }}" class="archivo-link" target="_blank">Descargar</a>
+                        </div>
+                        {% if group_name == 'directiva' or group_name == 'presidente' %}
+                            <a class="btn btn-sm btn-warning" href="{% url 'editar_documento' documento.id %}">Actualizar estado</a>
+                        {% endif %}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border: 2px solid #3498db;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #ecf0f1;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+    .document-list {
+        list-style: none;
+        padding: 0;
+    }
+    .document {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .documento-title {
+        font-weight: bold;
+        text-transform: capitalize;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    .detalle-item {
+        margin-bottom: 10px;
+    }
+    .archivo-link {
+        font-weight: bold;
+        text-transform: capitalize;
+        text-decoration: none;
+        color: #3498db;
+    }
+    .archivo-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.mostrar-detalle').on('click', function() {
+        $(this).next('.detalles').slideToggle();
+    });
+});
+</script>
+{% endblock %}

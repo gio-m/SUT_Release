@@ -1,0 +1,94 @@
+{% extends "base.html" %} 
+
+{% block titulo %} Agregar nueva actividad {% endblock %}
+
+{% block contenido %} 
+<div class="container my-4">
+    {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        <main class="container my-5">
+            <h1 class="text-center mb-4">Preguntas Frecuentes</h1>
+    
+            <div class="accordion" id="faqAccordion">
+    
+               
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <p>¿Cómo puedo registrarme en la plataforma?</p>
+                            </button>
+                        </h2>
+                    </div>
+    
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            Para registrarte en nuestra plataforma, dirígete a la sección de "Registrarse" en la página principal. Completa el formulario con tus datos personales y sigue las instrucciones para crear tu cuenta de usuario.
+                        </div>
+                    </div>
+                </div>
+    
+           
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                ¿Cómo puedo ingresar con mi usuario a la plataforma?
+                            </button>
+                        </h2>
+                    </div>
+    
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            Para ingresar, debes dirigirte a la opción que dice Iniciar Sesión e ingresar tus datos con los que te registrase.
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                ¿Cómo puedo ver las actividades disponibles?
+                            </button>
+                        </h2>
+                    </div>
+    
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            En la sección "Revisar Actividades" podrás encontrar un listado completo de las actividades disponibles. Puedes consultar los detalles de cada una y realizar tu inscripción si hay cupos disponibles.
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                ¿Cómo puedo solicitar un certificado de residencia u otro documento?
+                            </button>
+                        </h2>
+                    </div>
+    
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#faqAccordion">
+                        <div class="card-body">
+                            Haz clic en la sección "Solicitar Documentos" y completa el formulario correspondiente con los detalles de tu solicitud. Una vez enviado, el equipo de la junta de vecinos revisará y responderá a tu solicitud.
+                        </div>
+                    </div>
+                </div>
+                <!-- Puedes agregar más preguntas y respuestas siguiendo la misma estructura -->
+    
+            </div>
+        </main>
+
+
+</div>
+
+{% endblock %}

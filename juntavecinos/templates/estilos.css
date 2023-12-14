@@ -1,0 +1,12 @@
+
+
+.custom-card-deck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Espacio entre las tarjetas */
+}
+.custom-card {
+    flex: 0 0 calc(33.333% - 20px); /* Ancho de cada tarjeta */
+    /* Estilos adicionales para las tarjetas */
+}

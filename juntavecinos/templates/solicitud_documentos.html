@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="post">
+    {% load crispy_forms_tags %}
+    <div class="container my-4">
+        <h2>Solicitud de documentos</h2>
+
+        <!-- sección de mensajes -->
+        {% if messages %}
+            <div class="container mt-3">
+                {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="card mx-auto my-5" >
+                <div class="card-body">
+                    <h5 class="card-title">Complete todos los campos</h5>
+                    {{ form | crispy }}
+                    <a class="card-link" href="{% url 'inicio' %}">Inicio</a>
+                    <button class="btn btn-primary float-end" type="submit">Guardar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</form>
+
+
+
+<style>
+    .success-message {
+        display: none;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;
+        animation: fadeIn 2s; 
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .fade-out {
+        animation: fadeOut 2s; 
+    }
+
+    @keyframes fadeOut {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+</style>
+
+<script>
+    const successMessage = document.getElementById('success-message');
+    const showSuccessMessage = "{{ show_success_message|lower }}"; 
+
+    if (showSuccessMessage === "true") {
+        successMessage.style.display = 'block';
+        setTimeout(function () {
+            successMessage.classList.add('fade-out'); 
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 2000); // 
+        }, 5000);
+    }
+</script>
+</script>
+{% endblock %}
